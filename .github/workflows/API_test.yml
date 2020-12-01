@@ -45,7 +45,9 @@ jobs:
           mongodb-version: ${{ matrix.mongodb-version }}
 
       - name: Install Newman
-        run: npm install --prefic tests/API/
+        run: |
+          cd ./tests/API
+          npm install
 
       - name: Cache Dependencies
         run: deno cache server.ts
