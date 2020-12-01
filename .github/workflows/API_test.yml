@@ -57,10 +57,5 @@ jobs:
           deno run --allow-env --allow-read --allow-net server.ts &
           sleep 2
           cd ./tests/API
-          pwd
-          ls
-          ls ./node_modules
-          ls ./node_modules/newman
-          ls ./node_modules/newman/bin
           ./node_modules/newman/bin/newman.js run API.postman_collection.json
           kill -9 `lsof -i:3000 -t`
