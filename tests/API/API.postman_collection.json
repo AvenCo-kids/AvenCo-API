@@ -1,0 +1,48 @@
+{
+	"info": {
+		"_postman_id": "e317594f-e9a6-4a62-9854-685b54e2db87",
+		"name": "API",
+		"description": "Collection API for AvenCo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3d59bb3-95b6-4b70-9571-ee014b05905e",
+						"exec": [
+							"pm.test('Status code is 404', function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"})\r",
+							"\r",
+							"pm.test('Status message is Not found', function () {\r",
+							"    pm.response.to.have.body('Not found');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/aqugrfuygzfuyegrfuyge",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"aqugrfuygzfuyegrfuyge"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
