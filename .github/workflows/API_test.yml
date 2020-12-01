@@ -45,7 +45,9 @@ jobs:
           mongodb-version: ${{ matrix.mongodb-version }}
 
       - name: Install Newman
-        run: npm install --prefic tests/API/
+        run: |
+          cd ./tests/API
+          npm install
 
       - name: Cache Dependencies
         run: deno cache server.ts
@@ -54,5 +56,6 @@ jobs:
         run: |
           deno run --allow-env --allow-read --allow-net server.ts &
           sleep 2
-          cd tests/API && ./node_modules/newman/bin/newman.js run API.postman_collection.json
+          cd ./tests/API
+          ./node_modules/newman/bin/newman.js run API.postman_collection.json
           kill -9 `lsof -i:3000 -t`
