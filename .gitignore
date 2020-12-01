@@ -6,3 +6,6 @@
 
 # Dowloaded deno plugins
 .deno_plugins
+
+# Node module for postman tests
+node_modules
