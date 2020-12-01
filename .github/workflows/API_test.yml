@@ -22,7 +22,7 @@ jobs:
       matrix:
         deno: ["v1.x"]
         os: [ubuntu-latest]
-        mondodb-version: [4.2]
+        mongodb-version: [4.2]
         node-version: [12.x]
 
     steps:
