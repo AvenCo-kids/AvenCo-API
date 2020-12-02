@@ -1,7 +1,7 @@
-/**
- * Import abc to create routes
-*/
-import type { Group, Context } from "https://deno.land/x/abc@v1.2.3/mod.ts";
+import { NewStory } from "../models/story.model.ts";
+import createStory from '../actions/story/createStory.ts'
+
+import type { Group, Context } from 'https://deno.land/x/abc@v1.2.3/mod.ts';
 
 /**
  * Routes for story section
@@ -13,7 +13,7 @@ export default function (g: Group) {
      * @path {string} id - Id of the teddy
      * @path {string} storyId - Id of the story
      */
-    g.get('/story/launchStory/:id/:storyId', (c: Context) => {
+    g.get('/launchStory/:id/:storyId', (c: Context) => {
         const { id } = c.params;
         const { storyId } = c.params;
         return "{}";
@@ -25,7 +25,7 @@ export default function (g: Group) {
      * It doesn't contains the text of the story
      * @path {string} storyId - Id of the story
      */
-    g.get('/story/getStory/:storyId', (c: Context) => {
+    g.get('/getStory/:storyId', (c: Context) => {
         const { storyId } = c.params;
         return "{}";
     })
@@ -34,7 +34,7 @@ export default function (g: Group) {
      * Get the list of the stories avaible on the server
      * This list will give you, the names and ids of the stories
      */
-    g.get('/story', (c: Context) => {
+    g.get('/', (c: Context) => {
         return "{}";
     })
 
@@ -45,16 +45,16 @@ export default function (g: Group) {
      * @body {any} body - Architecture of the story to create
      */
     /** Technical comment : remove any, 2 lines under "const body any" */
-    g.post('/story', async (c: Context) => {
-        const body: any = await c.body;
-        return "{}";
+    g.post('/', async (c: Context) => {
+        const body: NewStory = await c.body as NewStory;
+        return createStory(c, body);
     })
 
     /**
      * Delete a story on the server
      * @path {string} storyId - Id of the story
      */
-    g.delete('/story/:storyId', async (c: Context) => {
+    g.delete('/:storyId', async (c: Context) => {
         const { storyId } = c.params;
         return "{}";
     })

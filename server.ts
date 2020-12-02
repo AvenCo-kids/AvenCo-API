@@ -9,13 +9,11 @@ if (download)
  */
 import { config } from "https://deno.land/x/dotenv@v1.0.1/mod.ts";
 config({export: true})
-import { Application } from "https://deno.land/x/abc@v1/mod.ts";
-import { HttpMethod } from "https://deno.land/x/abc@v1/constants.ts";
-import { logger } from "https://deno.land/x/abc@v1/middleware/logger.ts";
-import { DefaultSkipper } from "https://deno.land/x/abc@v1/middleware/skipper.ts";
-import { cors, CORSConfig } from "https://deno.land/x/abc@v1/middleware/cors.ts";
-import { init, db} from "./utils/dataBase.ts";
-init();
+import { Application } from "https://deno.land/x/abc@v1.2.3/mod.ts";
+import { HttpMethod } from "https://deno.land/x/abc@v1.2.3/constants.ts";
+import { logger } from "https://deno.land/x/abc@v1.2.3/middleware/logger.ts";
+import { DefaultSkipper } from "https://deno.land/x/abc@v1.2.3/middleware/skipper.ts";
+import { cors, CORSConfig } from "https://deno.land/x/abc@v1.2.3/middleware/cors.ts";
 
 /**
  * Init WebApp with logger
@@ -40,6 +38,10 @@ const corsConfig: CORSConfig = {
     allowOrigins: ['*'],
 }
 app.use(cors(corsConfig));
+
+import storyRoutes from './routes/routesStory.ts';
+
+storyRoutes(app.group('story'));
 
 /**
  * Fall back when trying to access unknown endpoint
