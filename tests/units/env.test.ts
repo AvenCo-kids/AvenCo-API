@@ -9,6 +9,6 @@ Deno.test({
     name: "Env check",
     fn(): void {
         assertEquals(Deno.env.get('DB_NAME'), 'aven_co');
-        assertEquals(Deno.env.get('DB_HOST_URL'), 'mongodb://localhost:27017');
+        assertEquals(Deno.env.get('DB_HOST_URL'), 'mongodb://127.0.0.1:27017');
     }
 })

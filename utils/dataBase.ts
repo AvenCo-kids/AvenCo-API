@@ -1,4 +1,4 @@
-import { MongoClient } from "https://deno.land/x/mongo@v0.13.0/mod.ts";
+import { MongoClient } from "https://deno.land/x/mongo@v0.20.0/mod.ts";
 
 /** Class representing a connection to a DB */
 class DB {
@@ -6,8 +6,8 @@ class DB {
 
     /**
      * Create a DB Object
-     * @param dbName - name of the DB to connect to
-     * @param url - Url of MongoDb
+     * @param {string} dbName - name of the DB to connect to
+     * @param {string} url - Url of MongoDb
      */
     constructor(public dbName: string, public url: string) {
         this.dbName = dbName;
@@ -20,7 +20,7 @@ class DB {
      */
     connect() {
         const client = new MongoClient();
-        client.connectWithUri(this.url);
+        client.connect(this.url);
         console.log(`Connected to database ${this.dbName} at url: ${this.url}`);
         this.client = client;
     }
