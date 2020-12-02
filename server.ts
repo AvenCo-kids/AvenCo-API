@@ -9,6 +9,8 @@ import { HttpMethod } from "https://deno.land/x/abc@v1/constants.ts";
 import { logger } from "https://deno.land/x/abc@v1/middleware/logger.ts";
 import { DefaultSkipper } from "https://deno.land/x/abc@v1/middleware/skipper.ts";
 import { cors, CORSConfig } from "https://deno.land/x/abc@v1/middleware/cors.ts";
+import { init, db} from "./utils/dataBase.ts";
+init();
 
 /**
  * Init WebApp with logger
