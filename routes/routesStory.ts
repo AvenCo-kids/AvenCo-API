@@ -13,11 +13,7 @@ export default function (g: Group) {
      * @path {string} id - Id of the teddy
      * @path {string} storyId - Id of the story
      */
-<<<<<<< HEAD
     g.get('/story/launchStory/:id/:storyId', (c: Context) => {
-=======
-    g.get('/launchStory/:id/:storyId', (c: Context) => {
->>>>>>> bd8abcd94b33da0addf169a23ff50ea03db4f696
         const { id } = c.params;
         const { storyId } = c.params;
         return "{}";
@@ -29,11 +25,7 @@ export default function (g: Group) {
      * It doesn't contains the text of the story
      * @path {string} storyId - Id of the story
      */
-<<<<<<< HEAD
     g.get('/story/getStory/:storyId', (c: Context) => {
-=======
-    g.get('/archStory/:storyId', (c: Context) => {
->>>>>>> bd8abcd94b33da0addf169a23ff50ea03db4f696
         const { storyId } = c.params;
         return "{}";
     })
@@ -42,11 +34,7 @@ export default function (g: Group) {
      * Get the list of the stories avaible on the server
      * This list will give you, the names and ids of the stories
      */
-<<<<<<< HEAD
     g.get('/story', (c: Context) => {
-=======
-    g.get('/storyList', (c: Context) => {
->>>>>>> bd8abcd94b33da0addf169a23ff50ea03db4f696
         return "{}";
     })
 
@@ -57,16 +45,11 @@ export default function (g: Group) {
      * @body {any} body - Architecture of the story to create
      */
     /** Technical comment : remove any, 2 lines under "const body any" */
-<<<<<<< HEAD
     g.post('/story', async (c: Context) => {
-=======
-    g.post('/createStory', async (c: Context) => {
->>>>>>> bd8abcd94b33da0addf169a23ff50ea03db4f696
         const body: any = await c.body;
         return "{}";
     })
 
-<<<<<<< HEAD
     /**
      * Delete a story on the server
      * @path {string} storyId - Id of the story
@@ -76,6 +59,4 @@ export default function (g: Group) {
         return "{}";
     })
 
-=======
->>>>>>> bd8abcd94b33da0addf169a23ff50ea03db4f696
 }
