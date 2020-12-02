@@ -10,8 +10,8 @@ export default function (g: Group) {
 
     /**
      * Launch a story on a teddy bear
-     * @id id of the teddy
-     * @storyId id of the story
+     * @path {string} id - Id of the teddy
+     * @path {string} storyId - Id of the story
      */
     g.get('/launchStory/:id/:storyId', (c: Context) => {
         const { id } = c.params;
@@ -23,7 +23,7 @@ export default function (g: Group) {
      * Get the architecture of a story, JSON format
      * This file, contains the JSON graph and the .mp3 to play
      * It doesn't contains the text of the story
-     * @storyId id of the story
+     * @path {string} storyId - Id of the story
      */
     g.get('/archStory/:storyId', (c: Context) => {
         const { storyId } = c.params;
@@ -42,6 +42,7 @@ export default function (g: Group) {
      * Create a story on the server
      * Body : architecture of the story, JSON format
      * ( ! Architecture format: UNDEFINED)
+     * @body {any} body - Architecture of the story to create
      */
     /** Technical comment : remove any, 2 lines under "const body any" */
     g.post('/createStory', async (c: Context) => {
