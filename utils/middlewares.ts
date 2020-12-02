@@ -1,5 +1,9 @@
 import { MiddlewareFunc } from "https://deno.land/x/abc@v1/mod.ts";
 
+/**
+ * Run next and catch any error to send friendly errors
+ * @param next Next middleware to call for request
+ */
 export const ErrorMiddleware: MiddlewareFunc = (next) => async (c) => {
     try {
         await next(c);

@@ -1,14 +1,23 @@
 import { MongoClient } from "https://deno.land/x/mongo@v0.13.0/mod.ts";
 
+/** Class representing a connection to a DB */
 class DB {
     public client: MongoClient;
 
+    /**
+     * Create a DB Object
+     * @param dbName - name of the DB to connect to
+     * @param url - Url of MongoDb
+     */
     constructor(public dbName: string, public url: string) {
         this.dbName = dbName;
         this.url = url;
         this.client = {} as MongoClient;
     }
 
+    /**
+     * Start the connection to the DB
+     */
     connect() {
         const client = new MongoClient();
         client.connectWithUri(this.url);
@@ -16,11 +25,18 @@ class DB {
         this.client = client;
     }
 
+    /**
+     * Get this db object
+     */
     get getDatabase() {
         return this.client.database(this.dbName);
     }
 }
 
+/**
+ * Create DB Object with env variable
+ * Should be called only one time
+ */
 export const init = () => {
 
     if (Deno.env.get('DB_NAME') == undefined)
@@ -35,4 +51,7 @@ export const init = () => {
     db.connect();
 }
 
+/**
+ * DB Object
+ */
 export var db:DB;
