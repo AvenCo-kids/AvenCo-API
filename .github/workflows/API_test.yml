@@ -50,7 +50,7 @@ jobs:
           npm install
 
       - name: Cache Dependencies
-        run: deno cache server.ts
+        run: deno cache --unstable server.ts
 
       - name: Run API and Postman's tests
         run: |
