@@ -1,3 +1,8 @@
+/** If WORK_ENV is set to DOWNLOAD then quit */
+const download: boolean = Deno.env.get('WORK_ENV') == 'DOWNLOAD';
+if (download)
+    Deno.exit(0);
+
 /**
  * Reading .env file and export to environment
  * Reading by default .env.defaults

@@ -52,6 +52,11 @@ jobs:
       - name: Cache Dependencies
         run: deno cache --unstable server.ts
 
+      - name: Download plugin
+        run: deno run --unstable --allow-env --allow-read --allow-write --allow-net --allow-plugin server.ts
+        env:
+          WORK_ENV: DOWNLOAD
+
       - name: Run API and Postman's tests
         run: |
           deno run --unstable --allow-env --allow-read --allow-write --allow-net --allow-plugin server.ts &
