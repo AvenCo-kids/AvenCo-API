@@ -2,7 +2,7 @@ import { ObjectId } from "https://deno.land/x/mongo@v0.20.0/bson/mod.ts";
 
 /** Represent a story in the db */
 export interface Story {
-    _id: string;
+    _id: ObjectId;
     name: string;
     startPoint: StoryNode;
 };
