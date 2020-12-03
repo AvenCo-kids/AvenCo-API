@@ -54,6 +54,19 @@ export const findByName = async (name: string, skip: number = 0, limit: number =
 }
 
 /**
+ * Find stories by name. Can have more than one. Return only id and name
+ * @param {string} name - Name to look for
+ * @param {number} skip - Offset of the list to give
+ * @param {number} limit - How much the list can have
+ * @returns {Story[]} - Only _id and name
+ */
+export const findShortByName = async (name: string, skip: number = 0, limit: number = 10) => {
+    const storys = await stories.find({name}, {projection: {_id: 1, name: 1}}).skip(skip).limit(limit).toArray();
+
+    return (storys);
+}
+
+/**
  * Get all stories
  * @param {number} skip - Offset of the list to give
  * @param {number} limit - Hove much the list can have
