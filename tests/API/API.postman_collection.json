@@ -42,6 +42,370 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Create Story",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bf9aeada-bfb0-489c-8b38-182e2e54cdbb",
+						"exec": [
+							"pm.environment.set(\"story_name\", \"Little Red Ridding Hood\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "92ecfb3f-507d-4810-986b-4a6e0b469333",
+						"exec": [
+							"pm.test('Status cose is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Reponse ok to process', function () {\r",
+							"    pm.response.to.not.be.error;\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test('Check name, same as sent', function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log('jsonData: ', jsonData);\r",
+							"    pm.expect(jsonData.name).to.eql(`${pm.environment.get(\"story_name\")}`);\r",
+							"    pm.environment.set('story_id', jsonData._id);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{story_name}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/story",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story"
+					]
+				},
+				"description": "Create a story, by sending the JSON architecture to the server.\n\nBody:\n> UNDEFINED"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0793230-b417-4a9c-aa7c-c702691c65e7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Reponse ok to process', function () {\r",
+							"    pm.response.to.not.be.error;\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test('Check res', function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log('jsonData: ', jsonData);\r",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"story_name\"));\r",
+							"    pm.expect(jsonData._id).to.eql(pm.environment.get(\"story_id\"));\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/story/:storyId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						":storyId"
+					],
+					"variable": [
+						{
+							"key": "storyId",
+							"value": "{{story_id}}"
+						}
+					]
+				},
+				"description": "Get the story defined by a JSON.\n\nBy default, this JSON does not contains the text of the story.  \n  \nParams:\n- storyId : Id of the story to look for a JSON"
+			},
+			"response": []
+		},
+		{
+			"name": "Story List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "180a9f46-b1cd-4fcc-8306-5ce2e4addc72",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Reponse ok to process', function () {\r",
+							"    pm.response.to.not.be.error;\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test('Check res', function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log('jsonData: ', jsonData);\r",
+							"    pm.expect(jsonData.length).to.greaterThan(0);\r",
+							"    const story = jsonData.find(sto => sto._id == pm.environment.get(\"story_id\"));\r",
+							"    pm.expect(story).to.be.an(\"object\", \"Could not find story\");\r",
+							"    pm.expect(story.name).to.eql(pm.environment.get(\"story_name\"));\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/story?limit=10&skip=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "skip",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Get the name, of all the sotries avaible on the server.\n\nNo params."
+			},
+			"response": []
+		},
+		{
+			"name": "Launch Story",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/story/launch/:id/:storyId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						"launch",
+						":id",
+						":storyId"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						},
+						{
+							"key": "storyId",
+							"value": ""
+						}
+					]
+				},
+				"description": "Launch a story\n\nParameters:\n- id : id of the teddy bear\n- storyId : id of the story to launch"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Story MP3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/story/mp3/{{story_id}}.zip",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						"mp3",
+						"{{story_id}}.zip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Story Script",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/story/script/{{story_id}}.zip",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						"script",
+						"{{story_id}}.zip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Story MP3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archive",
+							"type": "file",
+							"src": "/F:/AvenCo/test.zip"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/story/{{story_id}}/mp3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						"{{story_id}}",
+						"mp3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Story Script",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archive",
+							"type": "file",
+							"src": "/F:/AvenCo/test.zip"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/story/{{story_id}}/script",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						"{{story_id}}",
+						"script"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "203ccf16-3cf5-4960-852e-61fd44616326",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/story/:storyId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						":storyId"
+					],
+					"variable": [
+						{
+							"key": "storyId",
+							"value": "{{story_id}}"
+						}
+					]
+				},
+				"description": "delete the story.\r\n\r\nParams:\r\n- storyId : id of the story to look for a JSON"
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

@@ -1,4 +1,6 @@
 import { MongoClient } from "https://deno.land/x/mongo@v0.20.0/mod.ts";
+import { config } from "https://deno.land/x/dotenv@v1.0.1/mod.ts";
+config({export: true})
 
 /** Class representing a connection to a DB */
 class DB {
@@ -18,9 +20,9 @@ class DB {
     /**
      * Start the connection to the DB
      */
-    connect() {
+    async connect() {
         const client = new MongoClient();
-        client.connect(this.url);
+        await client.connect(this.url);
         console.log(`Connected to database ${this.dbName} at url: ${this.url}`);
         this.client = client;
     }
@@ -29,7 +31,12 @@ class DB {
      * Get this db object
      */
     get getDatabase() {
-        return this.client.database(this.dbName);
+        try {
+            return this.client.database(this.dbName);
+        } catch (err) {
+            console.log('err :', err);
+            throw err;
+        }
     }
 }
 
@@ -37,7 +44,7 @@ class DB {
  * Create DB Object with env variable
  * Should be called only one time
  */
-export const init = () => {
+const init = async () => {
 
     if (Deno.env.get('DB_NAME') == undefined)
         throw new Error("'DB_NAME' not found in env");
@@ -48,8 +55,10 @@ export const init = () => {
     const dbName = Deno.env.get('DB_NAME') || '';
     const dbHostUrl = Deno.env.get('DB_HOST_URL') || '';
     db = new DB(dbName, dbHostUrl);
-    db.connect();
+    await db.connect();
 }
+
+await init();
 
 /**
  * DB Object
