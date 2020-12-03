@@ -18,7 +18,7 @@ export default function (g: Group) {
      * @path {string} id - Id of the teddy
      * @path {string} storyId - Id of the story
      */
-    g.get('/:id/:storyId', (c: Context) => {
+    g.get('/launch/:id/:storyId', (c: Context) => {
         const { id } = c.params;
         const { storyId } = c.params;
         return (c.json("Not implemented", 500));

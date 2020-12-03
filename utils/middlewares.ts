@@ -9,7 +9,7 @@ export const ErrorMiddleware: MiddlewareFunc = (next) => async (c) => {
         await next(c);
     } catch (err) {
         if (err.message == 'Not found')
-            return c.string('Not found', 404);
+            return c.string('Not found', 400);
         if (err.message == 'Bad id')
             return c.string('Bad id', 400);
         if (err.message == 'Bad limit')

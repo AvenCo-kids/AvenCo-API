@@ -73,6 +73,7 @@
 							"\r",
 							"pm.test('Check name, same as sent', function () {\r",
 							"    var jsonData = pm.response.json();\r",
+							"    console.log('jsonData: ', jsonData);\r",
 							"    pm.expect(jsonData.name).to.eql(`${pm.environment.get(\"story_name\")}`);\r",
 							"    pm.environment.set('story_id', jsonData._id);\r",
 							"})"
@@ -128,6 +129,7 @@
 							"\r",
 							"pm.test('Check res', function () {\r",
 							"    var jsonData = pm.response.json();\r",
+							"    console.log('jsonData: ', jsonData);\r",
 							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"story_name\"));\r",
 							"    pm.expect(jsonData._id).to.eql(pm.environment.get(\"story_id\"));\r",
 							"})"
@@ -140,7 +142,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/story/{{story_id}}",
+					"raw": "http://localhost:3000/story/:storyId",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -148,7 +150,13 @@
 					"port": "3000",
 					"path": [
 						"story",
-						"{{story_id}}"
+						":storyId"
+					],
+					"variable": [
+						{
+							"key": "storyId",
+							"value": "{{story_id}}"
+						}
 					]
 				},
 				"description": "Get the story defined by a JSON.\n\nBy default, this JSON does not contains the text of the story.  \n  \nParams:\n- storyId : Id of the story to look for a JSON"
@@ -175,8 +183,11 @@
 							"\r",
 							"pm.test('Check res', function () {\r",
 							"    var jsonData = pm.response.json();\r",
+							"    console.log('jsonData: ', jsonData);\r",
 							"    pm.expect(jsonData.length).to.greaterThan(0);\r",
-							"    pm.expect(jsonData).to.contain({_id: pm.environment.get(\"story_id\"), name: pm.environment.get(\"story_name\")});\r",
+							"    const story = jsonData.find(sto => sto._id == pm.environment.get(\"story_id\"));\r",
+							"    pm.expect(story).to.be.an(\"object\", \"Could not find story\");\r",
+							"    pm.expect(story.name).to.eql(pm.environment.get(\"story_name\"));\r",
 							"})"
 						],
 						"type": "text/javascript"
@@ -217,7 +228,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/story/:id/:storyId",
+					"raw": "http://localhost:3000/story/launch/:id/:storyId",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -225,19 +236,18 @@
 					"port": "3000",
 					"path": [
 						"story",
+						"launch",
 						":id",
 						":storyId"
 					],
 					"variable": [
 						{
 							"key": "id",
-							"value": "",
-							"type": "string"
+							"value": ""
 						},
 						{
 							"key": "storyId",
-							"value": "",
-							"type": "string"
+							"value": ""
 						}
 					]
 				},
@@ -300,10 +310,7 @@
 							"type": "file",
 							"src": "/F:/AvenCo/test.zip"
 						}
-					],
-					"options": {
-						"formdata": {}
-					}
+					]
 				},
 				"url": {
 					"raw": "http://localhost:3000/story/{{story_id}}/mp3",
@@ -334,10 +341,7 @@
 							"type": "file",
 							"src": "/F:/AvenCo/test.zip"
 						}
-					],
-					"options": {
-						"formdata": {}
-					}
+					]
 				},
 				"url": {
 					"raw": "http://localhost:3000/story/{{story_id}}/script",
@@ -395,8 +399,7 @@
 					"variable": [
 						{
 							"key": "storyId",
-							"value": "{{story_id}}",
-							"type": "string"
+							"value": "{{story_id}}"
 						}
 					]
 				},
