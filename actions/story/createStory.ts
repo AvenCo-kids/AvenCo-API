@@ -1,6 +1,6 @@
 import { NewStory, Story } from '../../models/story.model.ts'
 import { createStory } from '../../services/story.service.ts';
-import type { Group, Context } from "https://deno.land/x/abc@v1.2.3/mod.ts";
+import type { Context } from 'https://deno.land/x/abc@v1.2.3/mod.ts';
 
 /**
  * Create a new story by calling the service 'createStory'

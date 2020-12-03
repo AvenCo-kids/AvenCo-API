@@ -32,6 +32,8 @@ export const findById = async (storyId: string) => {
     }
     const story = await stories.findOne({_id: id});
 
+    console.log({_id: id});
+
     if (story)
         return (story);
 
@@ -76,6 +78,7 @@ export const deleteById = async (storyId: string) => {
     } catch (error) {
         throw new Error('Bad id');
     }
+    console.log({_id: id});
     const res = await stories.deleteOne({_id: id});
 
     if (res == 0)

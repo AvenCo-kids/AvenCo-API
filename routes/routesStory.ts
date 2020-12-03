@@ -1,5 +1,7 @@
-import { NewStory } from "../models/story.model.ts";
-import createStory from '../actions/story/createStory.ts'
+import { NewStory } from '../models/story.model.ts';
+import createStory from '../actions/story/createStory.ts';
+import deleteStory from '../actions/story/deleteStory.ts';
+import getStory from '../actions/story/getStory.ts';
 
 import type { Group, Context } from 'https://deno.land/x/abc@v1.2.3/mod.ts';
 
@@ -27,7 +29,7 @@ export default function (g: Group) {
      */
     g.get('/getStory/:storyId', (c: Context) => {
         const { storyId } = c.params;
-        return "{}";
+        return getStory(c, storyId);
     })
 
     /**
@@ -41,10 +43,8 @@ export default function (g: Group) {
     /**
      * Create a story on the server
      * Body : architecture of the story, JSON format
-     * ( ! Architecture format: UNDEFINED)
      * @body {any} body - Architecture of the story to create
      */
-    /** Technical comment : remove any, 2 lines under "const body any" */
     g.post('/', async (c: Context) => {
         const body: NewStory = await c.body as NewStory;
         return createStory(c, body);
@@ -56,7 +56,7 @@ export default function (g: Group) {
      */
     g.delete('/:storyId', async (c: Context) => {
         const { storyId } = c.params;
-        return "{}";
+        return deleteStory(c, storyId);
     })
 
 }
