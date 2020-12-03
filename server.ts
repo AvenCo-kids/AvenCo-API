@@ -41,6 +41,8 @@ app.use(cors(corsConfig));
 
 import storyRoutes from './routes/routesStory.ts';
 
+const dataPath = Deno.env.get('DATA_PATH') || './data/';
+app.static('/story', dataPath);
 storyRoutes(app.group('story'));
 
 /**

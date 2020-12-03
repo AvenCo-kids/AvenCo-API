@@ -3,6 +3,8 @@ import createStory from '../actions/story/createStory.ts';
 import deleteStory from '../actions/story/deleteStory.ts';
 import getStory from '../actions/story/getStory.ts';
 import storyList from '../actions/story/storyList.ts';
+import postMp3 from '../actions/story/postMp3.ts';
+import postScript from "../actions/story/postScript.ts";
 
 import type { Group, Context } from 'https://deno.land/x/abc@v1.2.3/mod.ts';
 
@@ -59,6 +61,28 @@ export default function (g: Group) {
     g.delete('/:storyId', async (c: Context) => {
         const { storyId } = c.params;
         return deleteStory(c, storyId);
+    })
+
+    /**
+     * Post zip of mp3 for story
+     * @Path {string} storyId - Id of the story
+     * @body {archive: file} - contain file type and file content
+     */
+    g.post('/:storyId/mp3', async (c: Context) => {
+        const { storyId } = c.params;
+        const { archive } = await c.body as {archive: {filename: string, type: string, content: Uint8Array}};
+        return postMp3(c, storyId, archive);
+    })
+
+    /**
+     * Post zip of script for story
+     * @Path {string} storyId - Id of the story
+     * @body {archive: file} - contain file type and file content
+     */
+    g.post('/:storyId/script', async (c: Context) => {
+        const { storyId } = c.params;
+        const { archive } = await c.body as {archive: {filename: string, type: string, content: Uint8Array}};
+        return postScript(c, storyId, archive);
     })
 
 }
