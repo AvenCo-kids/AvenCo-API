@@ -9,3 +9,6 @@
 
 # Node module for postman tests
 node_modules
+
+# Data from runing
+data

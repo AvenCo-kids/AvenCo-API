@@ -1,4 +1,4 @@
-import { HandlerFunc, MiddlewareFunc } from "https://deno.land/x/abc@v1/mod.ts";
+import { HandlerFunc, MiddlewareFunc } from "https://deno.land/x/abc@v1.2.3/mod.ts";
 
 /**
  * Run next and catch any error to send friendly errors
