@@ -15,7 +15,7 @@ export default function (g: Group) {
      * @path {string} id - Id of the teddy
      * @path {string} storyId - Id of the story
      */
-    g.get('/launchStory/:id/:storyId', (c: Context) => {
+    g.get('/:id/:storyId', (c: Context) => {
         const { id } = c.params;
         const { storyId } = c.params;
         return "{}";
@@ -27,7 +27,7 @@ export default function (g: Group) {
      * It doesn't contains the text of the story
      * @path {string} storyId - Id of the story
      */
-    g.get('/getStory/:storyId', (c: Context) => {
+    g.get('/:storyId', (c: Context) => {
         const { storyId } = c.params;
         return getStory(c, storyId);
     })

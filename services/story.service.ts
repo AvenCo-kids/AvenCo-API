@@ -32,8 +32,6 @@ export const findById = async (storyId: string) => {
     }
     const story = await stories.findOne({_id: id});
 
-    console.log({_id: id});
-
     if (story)
         return (story);
 
