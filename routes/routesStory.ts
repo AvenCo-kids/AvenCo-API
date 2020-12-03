@@ -2,6 +2,7 @@ import { NewStory } from '../models/story.model.ts';
 import createStory from '../actions/story/createStory.ts';
 import deleteStory from '../actions/story/deleteStory.ts';
 import getStory from '../actions/story/getStory.ts';
+import storyList from '../actions/story/storyList.ts';
 
 import type { Group, Context } from 'https://deno.land/x/abc@v1.2.3/mod.ts';
 
@@ -18,7 +19,7 @@ export default function (g: Group) {
     g.get('/:id/:storyId', (c: Context) => {
         const { id } = c.params;
         const { storyId } = c.params;
-        return "{}";
+        return (c.json("Not implemented", 500));
     })
 
     /**
@@ -37,7 +38,8 @@ export default function (g: Group) {
      * This list will give you, the names and ids of the stories
      */
     g.get('/', (c: Context) => {
-        return "{}";
+        const { skip, limit } = c.queryParams;
+        return (storyList(c, parseInt(skip, 10), parseInt(limit)));
     })
 
     /**
