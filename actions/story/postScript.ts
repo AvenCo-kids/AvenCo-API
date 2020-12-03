@@ -13,7 +13,7 @@ export default async function (c: Context, storyId: string, archive: { filename:
     await findById(storyId);
     if (archive.type != 'application/zip')
         return c.string('Bad archive', 400);
-    const path = Deno.env.get('DATA_PATH') + 'mp3';
+    const path = Deno.env.get('DATA_PATH') + 'scrip';
     await writeFile(archive.content, path, storyId);
     return c.json('ok', 200);
 }
