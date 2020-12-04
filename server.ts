@@ -39,7 +39,7 @@ const corsConfig: CORSConfig = {
 }
 app.use(cors(corsConfig));
 
-import storyRoutes from './routes/routesStory.ts';
+import storyRoutes from './routes/story.routes.ts';
 import { ErrorMiddleware } from './utils/middlewares.ts';
 
 app.use(ErrorMiddleware);
