@@ -69,12 +69,3 @@ export const deleteById = async (userId: string) => {
     if (deleteCount == 0)
         throw new Error('Not found');
 }
-
-/* Implementation needed ? */
-/* export const getAll = async (limit: number | undefined, offset: number | undefined) => {
-    const foundUsers: User[] = (await users.find({}, { limit, skip: offset }))
-        .map(user => {
-            return {_id: user._id, mail: user.mail, name: user.name};
-        });
-    return foundUsers;
-} */
