@@ -1,9 +1,8 @@
 import {
     create,
     verify,
-    decode,
     Payload,
-    Jose,
+    Header,
 } from "https://deno.land/x/djwt@v1.9/mod.ts";
 
 import { MiddlewareFunc } from "https://deno.land/x/abc@v1/mod.ts";
@@ -25,12 +24,12 @@ export const generateJwt = (user: User) => {
         mail: user.mail,
         name: user.name,
     };
-    const header: Jose = {
-        alg: JwtConfig.alg as Jose["alg"],
-        typ: JwtConfig.type
+    const header: Header = {
+        alg: "HS256",
+        typ: "JWT",
     };
 
-    return create({header, payload, key: JwtConfig.secretKey});
+    return create(header, payload, JwtConfig.secretKey);
 }
 
 export const JwtAuth: MiddlewareFunc = (next) => async (c) => {
@@ -45,7 +44,7 @@ export const JwtAuth: MiddlewareFunc = (next) => async (c) => {
     let jwtRes;
 
     try {
-        jwtRes = await verify(token, JwtConfig.secretKey, JwtConfig.alg);
+        jwtRes = await verify(token, JwtConfig.secretKey, "HS256");
     } catch (err) {
         throw new Error(err);
     }
@@ -64,7 +63,3 @@ export const JwtAuth: MiddlewareFunc = (next) => async (c) => {
 
     return next(c);
 }
-
-
-
-
