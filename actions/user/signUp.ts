@@ -13,9 +13,10 @@ export default async function (c: Context, newUser: NewUser) {
         await findByMail(newUser.mail);
         return c.string('conflict', 409);
     } catch (err) {
-        console.log('err: ', err);
-        if (err.message != 'Not found')
+        if (err.message != 'Not found') {
+            console.log('err: ', err);
             throw err;
+        }
     }
 
     const userId = await createUser(newUser);
