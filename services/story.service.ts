@@ -1,5 +1,5 @@
 import { db } from '../utils/dataBase.ts';
-import type { Story, NewStory } from '../models/story.model.ts';
+import { Story, StoryJSON } from '../models/story.model.ts';
 import { ObjectId } from "https://deno.land/x/mongo@v0.20.0/bson/mod.ts";
 
 const database = db.getDatabase;
@@ -7,13 +7,13 @@ const stories = database.collection<Story>('stories');
 
 /**
  * Create a new story and return it's id
- * @param {NewStory} newStory - Story to create
- * @returns {ObjectId} - Id of the created story
+ * @param {StoryJSON} newStory - Story to create
+ * @returns {string} - Id of the created story
  */
-export const createStory = async (newStory: NewStory): Promise<ObjectId> => {
-    const fullStory = newStory as Story;
+export const createStory = async (newStory: StoryJSON): Promise<string> => {
+    const fullStory = new Story(newStory);
     const insertedId = await stories.insertOne(fullStory);
-    return (insertedId as ObjectId);
+    return insertedId.toString();
 }
 
 /**
