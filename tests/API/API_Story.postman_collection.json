@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e317594f-e9a6-4a62-9854-685b54e2db87",
-		"name": "API",
+		"name": "API_Story",
 		"description": "Collection API for AvenCo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -87,7 +87,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{story_name}}\"\n}",
+					"raw": "{\n    \"name\": \"{{story_name}}\",\n    \"startPoint\": {\n        \"node\": [{\n            \"inputName\": \"hand_left\",\n            \"next\": {\n                \"node\": [{\n                    \"inputName\": \"feet_left\",\n                    \"next\": {\n                        \"node\": [{\n                            \"inputName\": \"feet_left\",\n                            \"next\": {}\n                        }, {\n                            \"inputName\": \"hand_left\",\n                            \"next\": {\n                                \"node\": [{\n                                    \"inputName\": \"hand_left\",\n                                    \"tp\": true,\n                                    \"path\": \"hand_left.feet_left.hand_right\"\n                                }, {\n                                    \"inputName\": \"hand_right\",\n                                    \"tp\": true,\n                                    \"path\": \"hand_left.feet_left.feet_left\"\n                                }]\n                            }\n                        }, {\n                            \"inputName\": \"hand_right\",\n                            \"next\": {}\n                        }]\n                    }\n                }]\n            }\n        }]\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -155,7 +155,8 @@
 					"variable": [
 						{
 							"key": "storyId",
-							"value": "{{story_id}}"
+							"value": "{{story_id}}",
+							"type": "string"
 						}
 					]
 				},
@@ -243,15 +244,54 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": ""
+							"value": "",
+							"type": "string"
 						},
 						{
 							"key": "storyId",
-							"value": ""
+							"value": "",
+							"type": "string"
 						}
 					]
 				},
 				"description": "Launch a story\n\nParameters:\n- id : id of the teddy bear\n- storyId : id of the story to launch"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Story",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"wesh ma geule\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/story/:storyId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"story",
+						":storyId"
+					],
+					"variable": [
+						{
+							"id": "3fae44d6-3205-479c-8cf8-722603728791",
+							"key": "storyId",
+							"value": "",
+							"type": "string"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -310,7 +350,10 @@
 							"type": "file",
 							"src": "/F:/AvenCo/test.zip"
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3000/story/{{story_id}}/mp3",
@@ -341,7 +384,10 @@
 							"type": "file",
 							"src": "/F:/AvenCo/test.zip"
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3000/story/{{story_id}}/script",
@@ -399,7 +445,8 @@
 					"variable": [
 						{
 							"key": "storyId",
-							"value": "{{story_id}}"
+							"value": "{{story_id}}",
+							"type": "string"
 						}
 					]
 				},
