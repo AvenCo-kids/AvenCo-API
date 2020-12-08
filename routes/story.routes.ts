@@ -1,4 +1,4 @@
-import { NewStory } from '../models/story.model.ts';
+import { StoryJSON } from '../models/story.model.ts';
 import createStory from '../actions/story/createStory.ts';
 import deleteStory from '../actions/story/deleteStory.ts';
 import getStory from '../actions/story/getStory.ts';
@@ -50,7 +50,7 @@ export default function (g: Group) {
      * @body {any} body - Architecture of the story to create
      */
     g.post('/', async (c: Context) => {
-        const body: NewStory = await c.body as NewStory;
+        const body: StoryJSON = await c.body as StoryJSON;
         return createStory(c, body);
     })
 
