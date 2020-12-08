@@ -19,5 +19,6 @@ export default async function (c: Context, newUser: NewUser) {
         }
     }
 
-    return c.json("ok", 200);
+    const userId = await createUser(newUser);
+    return c.json(userId, 200);
 }
