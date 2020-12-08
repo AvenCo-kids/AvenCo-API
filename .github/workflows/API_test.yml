@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        deno: ["v1.x"]
+        deno: ["v1.5.x"]
         os: [ubuntu-latest]
         mongodb-version: [4.2]
         node-version: [12.x]
