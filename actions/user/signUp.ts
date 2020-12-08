@@ -6,7 +6,7 @@ import type { Context } from 'https://deno.land/x/abc@v1.2.3/mod.ts';
  * Signup an user, and check for possible for an possible error
  * @param {Context} c - Context of the HTTP request
  * @param {NewUser} newUser - User to register
- * @returns {} - id... I guess, I need to test
+ * @returns {string} - "ok"
  */
 export default async function (c: Context, newUser: NewUser) {
     try {
@@ -19,6 +19,5 @@ export default async function (c: Context, newUser: NewUser) {
         }
     }
 
-    const userId = await createUser(newUser);
-    return c.json(userId, 200);
+    return c.json("ok", 200);
 }
