@@ -39,7 +39,8 @@ const corsConfig: CORSConfig = {
 }
 app.use(cors(corsConfig));
 
-import storyRoutes from './routes/routesStory.ts';
+import storyRoutes from './routes/story.routes.ts';
+import userRoutes from './routes/user.routes.ts';
 import { ErrorMiddleware } from './utils/middlewares.ts';
 
 app.use(ErrorMiddleware);
@@ -48,6 +49,7 @@ const dataPath = Deno.env.get('DATA_PATH') || './data/';
 app.static('/story/mp3', dataPath + "mp3");
 app.static('/story/script', dataPath + "script");
 storyRoutes(app.group('story'));
+userRoutes(app.group('user'));
 
 /**
  * Fall back when trying to access unknown endpoint

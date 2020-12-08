@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        deno: ["v1.x"]
+        deno: ["v1.5.x"]
         os: [ubuntu-latest]
         mongodb-version: [4.2]
         node-version: [12.x]
@@ -57,10 +57,18 @@ jobs:
         env:
           WORK_ENV: DOWNLOAD
 
-      - name: Run API and Postman's tests
+      - name: Run API Story and Postman's tests
         run: |
           deno run --unstable --allow-env --allow-read --allow-write --allow-net --allow-plugin server.ts &
           sleep 5
           cd ./tests/API
-          ./node_modules/newman/bin/newman.js run API.postman_collection.json
+          ./node_modules/newman/bin/newman.js run API_Story.postman_collection.json
+          kill -9 `lsof -i:3000 -t`
+
+      - name: Run API User and Postman's tests
+        run: |
+          deno run --unstable --allow-env --allow-read --allow-write --allow-net --allow-plugin server.ts &
+          sleep 5
+          cd ./tests/API
+          ./node_modules/newman/bin/newman.js run API_User.postman_collection.json
           kill -9 `lsof -i:3000 -t`
