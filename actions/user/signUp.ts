@@ -6,7 +6,7 @@ import type { Context } from 'https://deno.land/x/abc@v1.2.3/mod.ts';
  * Signup an user, and check for possible for an possible error
  * @param {Context} c - Context of the HTTP request
  * @param {NewUser} newUser - User to register
- * @returns {string} - "ok"
+ * @returns {string} - user's id
  */
 export default async function (c: Context, newUser: NewUser) {
     try {
